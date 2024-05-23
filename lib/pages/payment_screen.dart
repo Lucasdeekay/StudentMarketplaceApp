@@ -72,8 +72,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
     txRef = uuid.v4();
   }
 
-
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(

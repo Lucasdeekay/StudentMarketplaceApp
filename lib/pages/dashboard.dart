@@ -37,6 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String username = '';
   String user_id = '';
   String program = '';
+  String balance = '';
 
 
   @override
@@ -49,6 +50,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
     username = widget.username;
     user_id = widget.user_id;
     program = widget.program;
+  }
+
+  Future<void> fetchData() async {
+
+    try {
+      final response = await http.get(Uri.parse(
+          'https://localhost:8000/dashboard'));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        setState(() {
+          balance = data['wallet']['balance'];
+        });
+
+      } else {
+        // Handle API error
+        errorFlushbar(context, 'Error', 'Unable to load data. Check your internet connection');
+      }
+    } catch (e) {
+      // Handle other errors
+      errorFlushbar(context, 'Error', 'An error occured');
+    }
   }
 
 
@@ -228,6 +252,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                             ),
                           ],
+                        ),
+                        SizedBox(height: 24.0,),
+                        Divider(
+                          height: 24,
+                          thickness: 2,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                          'Wallet Balance',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 24.0,
+                            fontFamily: 'Outfit',
+                            letterSpacing: 0,
+                          ),
+                        ),
+                        Text(
+                          '#$balance',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.0,
+                            fontFamily: 'Plus Jakarta Sans',
+                            color: Colors.grey,
+                            letterSpacing: 0,
+                          ),
                         ),
                       ],
                     ),
