@@ -274,9 +274,8 @@ class _RetrievePasswordScreenState extends State<RetrievePasswordScreen> {
 
                                 infoFlushbar(context, "Loading...", "Signing in your account...");
 
-                                // Replace 'http://your_django_api_url/login' with your actual endpoint
                                 final response = await http.post(
-                                  Uri.parse('https://localhost:8000/retrieve_password'),
+                                  Uri.parse('https://studentmarketplace.pythonanywhere.com/retrieve_password'),
                                   headers: {
                                     'Content-Type': 'application/json',
                                   },

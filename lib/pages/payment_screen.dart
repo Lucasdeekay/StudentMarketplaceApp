@@ -16,7 +16,7 @@ class PaymentScreen extends StatefulWidget {
   final String matricNumber;
   final String username;
   final String user_id;
-  final String program;
+  final String phone_number;
 
   const PaymentScreen(
       {Key? key,
@@ -26,7 +26,7 @@ class PaymentScreen extends StatefulWidget {
         required this.matricNumber,
         required this.username,
         required this.user_id,
-        required this.program})
+        required this.phone_number})
       : super(key: key);
 
   @override
@@ -46,11 +46,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
   String matricNumber = '';
   String username = '';
   String user_id = '';
-  String program = '';
+  String phone_number = '';
 
   final emailRegex = RegExp(r"[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*");
 
-  var publicKey = '';
+  var publicKey = 'pk_test_0f30abd4793da6f7064c7a7fafd0fefa0c9d50d9';
   final plugin = PaystackPlugin();
 
   @override
@@ -62,7 +62,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     matricNumber = widget.matricNumber;
     username = widget.username;
     user_id = widget.user_id;
-    program = widget.program;
+    phone_number = widget.phone_number;
     plugin.initialize(publicKey: publicKey);
     generateTransactionRef();
   }
@@ -337,7 +337,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         ],
       ),
       bottomNavigationBar: BottomBar(context, 3, firstName, lastName, email,
-          matricNumber, username, user_id, program),
+          matricNumber, username, user_id, phone_number),
     );
   }
 
@@ -373,7 +373,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   void savePaymentData(String amount, String description) async {
     String apiUrl;
-    description == 'Deposit' ? apiUrl = 'https://localhost:8000/wallet/deposit/' : apiUrl = 'https://localhost:8000/wallet/withdraw/';
+    description == 'Deposit' ? apiUrl = 'https://studentmarketplace.pythonanywhere.com/wallet/deposit/?user_id=$user_id/' : apiUrl = 'https://studentmarketplace.pythonanywhere.com/wallet/withdraw/?user_id=$user_id/';
     final headers = {'Content-Type': 'application/json'};
     final data = {
       'amount': amount,

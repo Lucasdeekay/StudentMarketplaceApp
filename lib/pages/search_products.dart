@@ -18,9 +18,10 @@ class ProductItem extends StatelessWidget {
   final String available_quantity;
   final String category;
   final String image;
+  final String user_id;
 
 
-  ProductItem({required this.product_id, required this.title, required this.description, required this.price, required this.available_quantity, required this.category, required this.image});
+  ProductItem({required this.product_id, required this.title, required this.description, required this.price, required this.available_quantity, required this.category, required this.image, required this.user_id});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class ProductItem extends StatelessWidget {
           onTap: () async {
             // Handle "Sign In" tap (e.g., navigate to sign in screen)
             Navigator.of(context)
-                .push(createRoute(PurchaseProductScreen(product_id: product_id, title: title, description: description, price: price, available_quantity: available_quantity, image: image)));
+                .push(createRoute(PurchaseProductScreen(product_id: product_id, title: title, description: description, price: price, available_quantity: available_quantity, image: image, user_id: user_id)));
           },
           child: Container(
             width: double.infinity,
@@ -160,7 +161,7 @@ class ProductList {
 
   ProductList({required this.items});
 
-  factory ProductList.fromJson(List<dynamic> json) {
+  factory ProductList.fromJson(List<dynamic> json, String user_id) {
     List<ProductItem> items = [];
 
     for (var item in json) {
@@ -172,6 +173,7 @@ class ProductList {
         available_quantity: '${item['available_quantity']}',
         category: '${item['category']}',
         image: '${item['image']}',
+        user_id: user_id,
       ));
     }
 
@@ -186,7 +188,7 @@ class SearchProductScreen extends StatefulWidget {
   final String matricNumber;
   final String username;
   final String user_id;
-  final String program;
+  final String phone_number;
 
   const SearchProductScreen(
       {Key? key,
@@ -196,7 +198,7 @@ class SearchProductScreen extends StatefulWidget {
       required this.matricNumber,
       required this.username,
       required this.user_id,
-      required this.program})
+      required this.phone_number})
       : super(key: key);
 
   @override
@@ -210,7 +212,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
   String matricNumber = '';
   String username = '';
   String user_id = '';
-  String program = '';
+  String phone_number = '';
   ProductList? products;
 
   TextEditingController searchBarTextController = TextEditingController();
@@ -224,19 +226,19 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
     matricNumber = widget.matricNumber;
     username = widget.username;
     user_id = widget.user_id;
-    program = widget.program;
+    phone_number = widget.phone_number;
   }
 
   Future<void> fetchData(searchText) async {
     try {
       final response = await http
-          .get(Uri.parse('https://www.priceprediction.com.ng/dashboard'));
+          .get(Uri.parse('https://studentmarketplace.pythonanywhere.com/dashboard/?user_id=$user_id/'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
 
         setState(() {
-          products = ProductList.fromJson(data['products']);
+          products = ProductList.fromJson(data['products'], user_id);
         });
       } else {
         // Handle API error
@@ -320,7 +322,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         filled: true,
-                        fillColor: Colors.grey,
+                        fillColor: Colors.white,
                       ),
                       style: const TextStyle(
                         fontSize: 16.0,
@@ -406,7 +408,7 @@ class _SearchProductScreenState extends State<SearchProductScreen> {
         ),
       ),
       bottomNavigationBar: BottomBar(context, 1, firstName, lastName, email,
-          matricNumber, username, user_id, program),
+          matricNumber, username, user_id, phone_number),
     );
   }
 }

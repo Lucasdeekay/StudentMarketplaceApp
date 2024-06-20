@@ -249,9 +249,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                 infoFlushbar(context, "Loading...",
                                     "Signing in your account...");
 
-                                // Replace 'http://your_django_api_url/login' with your actual endpoint
                                 final response = await http.post(
-                                  Uri.parse('https://localhost:8000/login'),
+                                  Uri.parse('https://studentmarketplace.pythonanywhere.com/login'),
                                   headers: {
                                     'Content-Type': 'application/json',
                                   },
@@ -265,12 +264,13 @@ class _SignInScreenState extends State<SignInScreen> {
                                   // Login successful! Parse the response (replace with your actual data structure)
                                   var data = jsonDecode(response.body);
                                   String successMessage = data['success'];
+                                  data = data["student"];
 
                                   successFlushbar(context, "Success", successMessage);
                                   Future.delayed(Duration(seconds: 3), () {
                                     // Pass the token to the home screen (or handle it appropriately)
                                     Navigator.of(context).pushAndRemoveUntil(
-                                      createRoute(DashboardScreen(firstName:data['first_name'], lastName: data['last_name'], email: data['email'], matricNumber: data['matric_no'], username: data['username'], user_id: data['user_id'], program: data['program'],)),
+                                      createRoute(DashboardScreen(firstName:data['first_name'], lastName: data['last_name'], email: data['email'], matricNumber: data['matric_no'], username: data['user_username'], user_id: '${data['user']}', phone_number: data['phone_number'],)),
                                           (route) => false,
                                     );
                                   });

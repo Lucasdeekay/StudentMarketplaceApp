@@ -226,9 +226,8 @@ class _SupportScreenState extends State<SupportScreen> {
 
                                 infoFlushbar(context, "Loading...", "Sending mail...");
 
-                                // Replace 'http://your_django_api_url/login' with your actual endpoint
                                 final response = await http.post(
-                                  Uri.parse('http://localhost:8000/support/email'),
+                                  Uri.parse('https://studentmarketplace.pythonanywhere.com/support/email'),
                                   headers: {
                                     'Content-Type': 'application/json',
                                   },

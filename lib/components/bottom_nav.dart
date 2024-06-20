@@ -9,7 +9,7 @@ import '../pages/payment_screen.dart';
 
 
 
-Widget BottomBar(BuildContext context, int index, String firstName, String lastName, String email, String matricNumber, String username, String user_id, String program){
+Widget BottomBar(BuildContext context, int index, String firstName, String lastName, String email, String matricNumber, String username, String user_id, String phone_number){
   return BottomNavigationBar(
     // Navigation Bar at the bottom
     backgroundColor: Colors.white,
@@ -54,22 +54,22 @@ Widget BottomBar(BuildContext context, int index, String firstName, String lastN
       // Handle navigation here
       if (index == 0) {
         // Navigate to the Product
-        Navigator.of(context).push(createRoute(DashboardScreen(firstName: firstName, lastName: lastName, email: email, matricNumber: matricNumber, username: username, user_id: user_id, program: program,)));
+        Navigator.of(context).push(createRoute(DashboardScreen(firstName: firstName, lastName: lastName, email: email, matricNumber: matricNumber, username: username, user_id: user_id, phone_number: phone_number,)));
       } else if (index == 1) {
         // Navigate to profile
-        Navigator.of(context).push(createRoute(SearchProductScreen(firstName: firstName, lastName: lastName, email: email, matricNumber: matricNumber, username: username, user_id: user_id, program: program,)));
+        Navigator.of(context).push(createRoute(SearchProductScreen(firstName: firstName, lastName: lastName, email: email, matricNumber: matricNumber, username: username, user_id: user_id, phone_number: phone_number,)));
       }
       else if (index == 2) {
         // Navigate to profile
-        Navigator.of(context).push(createRoute(MyProductsScreen(firstName: firstName, lastName: lastName, email: email, matricNumber: matricNumber, username: username, user_id: user_id, program: program,)));
+        Navigator.of(context).push(createRoute(MyProductsScreen(firstName: firstName, lastName: lastName, email: email, matricNumber: matricNumber, username: username, user_id: user_id, phone_number: phone_number,)));
       }
       else if (index == 3) {
         // Navigate to profile
-        Navigator.of(context).push(createRoute(PaymentScreen(firstName: firstName, lastName: lastName, email: email, matricNumber: matricNumber, username: username, user_id: user_id, program: program,)));
+        Navigator.of(context).push(createRoute(PaymentScreen(firstName: firstName, lastName: lastName, email: email, matricNumber: matricNumber, username: username, user_id: user_id, phone_number: phone_number,)));
       }
       else if (index == 4) {
         // Navigate to profile
-        Navigator.of(context).push(createRoute(ProfileScreen(firstName: firstName, lastName: lastName, email: email, matricNumber: matricNumber, username: username, user_id: user_id, program: program,)));
+        Navigator.of(context).push(createRoute(ProfileScreen(firstName: firstName, lastName: lastName, email: email, matricNumber: matricNumber, username: username, user_id: user_id, phone_number: phone_number,)));
       }
     },
   );

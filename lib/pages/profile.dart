@@ -14,9 +14,9 @@ class ProfileScreen extends StatefulWidget {
   final String matricNumber;
   final String username;
   final String user_id;
-  final String program;
+  final String phone_number;
 
-  const ProfileScreen({Key? key, required this.firstName, required this.lastName, required this.email, required this.matricNumber, required this.username, required this.user_id, required this.program}) : super(key: key);
+  const ProfileScreen({Key? key, required this.firstName, required this.lastName, required this.email, required this.matricNumber, required this.username, required this.user_id, required this.phone_number}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -29,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String matricNumber = '';
   String username = '';
   String user_id = '';
-  String program = '';
+  String phone_number = '';
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     matricNumber = widget.matricNumber;
     username = widget.username;
     user_id = widget.user_id;
-    program = widget.program;
+    phone_number = widget.phone_number;
   }
 
   @override
@@ -260,7 +260,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               highlightColor: Colors.transparent,
                               onTap: () async {
                                 final response = await http.post(
-                                  Uri.parse('https://www.priceprediction.com.ng/logout'),
+                                  Uri.parse('https://studentmarketplace.pythonanywhere.com/logout'),
                                   headers: {
                                     'Content-Type': 'application/json',
                                   },
@@ -317,7 +317,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomBar(context, 4, firstName, lastName, email, matricNumber, username, user_id, program),
+      bottomNavigationBar: BottomBar(context, 4, firstName, lastName, email, matricNumber, username, user_id, phone_number),
     );
   }
 }

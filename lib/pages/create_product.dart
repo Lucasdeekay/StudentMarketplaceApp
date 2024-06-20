@@ -306,7 +306,6 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                                 ),
                                 TextFormField(
                                   controller: imageController,
-                                  autofillHints: [AutofillHints.email],
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -354,11 +353,8 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return 'Image url is required';
-                                    } else if (!emailRegex.hasMatch(value)) {
-                                      return 'Invalid Image URL';
-                                    } else {
-                                      return null;
                                     }
+                                      return null;
                                   },
                                 ),
                               ],
@@ -461,9 +457,8 @@ class _CreateProductScreenState extends State<CreateProductScreen> {
 
                                 infoFlushbar(context, "Loading...", "Adding new product");
 
-                                // Replace 'http://your_django_api_url/login' with your actual endpoint
                                 final response = await http.post(
-                                  Uri.parse('http://localhost:8000/products/create'),
+                                  Uri.parse('https://studentmarketplace.pythonanywhere.com/products/create/'),
                                   headers: {
                                     'Content-Type': 'application/json',
                                   },

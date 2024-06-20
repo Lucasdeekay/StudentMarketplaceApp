@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:student_marketplace/pages/create_product.dart';
+import '../components/alert_manager.dart';
 import '../components/bottom_nav.dart';
+import '../components/greeting.dart';
 import '../components/route_manager.dart';
+import 'package:http/http.dart' as http;
 
 
 class DashboardScreen extends StatefulWidget {
@@ -12,7 +17,7 @@ class DashboardScreen extends StatefulWidget {
   final String matricNumber;
   final String username;
   final String user_id;
-  final String program;
+  final String phone_number;
 
   const DashboardScreen(
       {Key? key,
@@ -22,7 +27,7 @@ class DashboardScreen extends StatefulWidget {
         required this.matricNumber,
         required this.username,
         required this.user_id,
-        required this.program})
+        required this.phone_number})
       : super(key: key);
 
   @override
@@ -36,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String matricNumber = '';
   String username = '';
   String user_id = '';
-  String program = '';
+  String phone_number = '';
   String balance = '';
 
 
@@ -49,15 +54,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     matricNumber = widget.matricNumber;
     username = widget.username;
     user_id = widget.user_id;
-    program = widget.program;
+    phone_number = widget.phone_number;
+    fetchData();
   }
 
   Future<void> fetchData() async {
-
     try {
-      final response = await http.get(Uri.parse(
-          'https://localhost:8000/dashboard'));
-
+      final response = await http.get(Uri.parse('https://studentmarketplace.pythonanywhere.com/dashboard/?user_id=$user_id'));
+      print(json.decode(response.body));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
 
@@ -130,21 +134,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Good Morning,',
+                          'Hello, $lastName $firstName',
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 24.0,
                             fontFamily: 'Outfit',
-                            letterSpacing: 0,
-                          ),
-                        ),
-                        Text(
-                          '$lastName $firstName',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.0,
-                            fontFamily: 'Plus Jakarta Sans',
-                            color: Colors.grey,
                             letterSpacing: 0,
                           ),
                         ),
@@ -224,7 +218,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Program',
+                                    'Phone Number',
                                     style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontSize: 16,
@@ -237,7 +231,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        '$program',
+                                        '$phone_number',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14.0,
@@ -360,7 +354,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
       bottomNavigationBar: BottomBar(context, 0, firstName, lastName, email,
-          matricNumber, username, user_id, program),
+          matricNumber, username, user_id, phone_number),
     );
   }
 }

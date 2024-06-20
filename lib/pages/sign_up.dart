@@ -18,9 +18,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController matricNoController = TextEditingController();
-  String? program;
-  String? level;
   TextEditingController emailController = TextEditingController();
+  TextEditingController bioController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late bool passwordVisibility = true;
 
@@ -300,7 +300,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                                   child: Text(
-                                    'Program',
+                                    'Phone Number',
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.normal,
@@ -309,49 +309,59 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     ),
                                   ),
                                 ),
-                                DropdownButtonFormField<String>(
-                                  value: program,
-                                  hint: const Row(
-                                    children: <Widget>[
-                                      Icon(Icons.book, color: Colors.black),
-                                      SizedBox(width: 10),
-                                      Text('Select Program', style: TextStyle(color: Colors.black, fontSize: 12.0)),
-                                    ],
-                                  ),
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      program = newValue;
-                                    });
-                                  },
-                                  items: [
-                                    'Computer Science',
-                                    'Software Engineering',
-                                    'Cyber Security',
-                                    'Biochemistry',
-                                    'Industrial Chemistry',
-                                    'Business Administration',
-                                    'Mass Communication',
-                                    'Criminology',
-                                    'Microbiology',
-                                    'Economics/Accounting',
-                                  ].map((String program) {
-                                    return DropdownMenuItem<String>(
-                                      value: program,
-                                      child: Row(
-                                        children: <Widget>[
-                                          const Icon(Icons.book, color: Colors.black),
-                                          const SizedBox(width: 10),
-                                          Text(program, style: const TextStyle(color: Colors.black, fontSize: 12.0)),
-                                        ],
+                                TextFormField(
+                                  controller: phoneNumberController,
+                                  autofillHints: [AutofillHints.telephoneNumberExtension],
+                                  textInputAction: TextInputAction.next,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
                                       ),
-                                    );
-                                  }).toList(),
-                                  decoration: const InputDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
                                     filled: true,
                                     fillColor: Colors.white,
                                   ),
-                                  dropdownColor: Colors.white,
-                                  iconEnabledColor: Colors.black,
+                                  style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    color: Colors.black,
+                                    height: 1,
+                                  ),
+                                  minLines: 1,
+                                  keyboardType: TextInputType.phone,
+                                  cursorColor: Colors.blue,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Phone Number is required';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ],
                             ),
@@ -366,7 +376,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                                   child: Text(
-                                    'Level',
+                                    'Bio',
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.normal,
@@ -375,43 +385,59 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     ),
                                   ),
                                 ),
-                                DropdownButtonFormField<String>(
-                                  value: program,
-                                  hint: const Row(
-                                    children: <Widget>[
-                                      Icon(Icons.book, color: Colors.black),
-                                      SizedBox(width: 10),
-                                      Text('Select Level', style: TextStyle(color: Colors.black, fontSize: 12.0)),
-                                    ],
-                                  ),
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      program = newValue;
-                                    });
-                                  },
-                                  items: [
-                                    '100',
-                                    '200',
-                                    '300',
-                                    '400',
-                                  ].map((String level) {
-                                    return DropdownMenuItem<String>(
-                                      value: level,
-                                      child: Row(
-                                        children: <Widget>[
-                                          const Icon(Icons.grade, color: Colors.black),
-                                          const SizedBox(width: 10),
-                                          Text(level, style: const TextStyle(color: Colors.black, fontSize: 12.0)),
-                                        ],
+                                TextFormField(
+                                  controller: bioController,
+                                  textInputAction: TextInputAction.next,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
                                       ),
-                                    );
-                                  }).toList(),
-                                  decoration: const InputDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
                                     filled: true,
                                     fillColor: Colors.white,
                                   ),
-                                  dropdownColor: Colors.white,
-                                  iconEnabledColor: Colors.black,
+                                  style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.normal,
+                                    fontFamily: 'Plus Jakarta Sans',
+                                    color: Colors.black,
+                                    height: 1,
+                                  ),
+                                  minLines: 2,
+                                  maxLines: 4,
+                                  keyboardType: TextInputType.text,
+                                  cursorColor: Colors.blue,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Bio is required';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ],
                             ),
@@ -603,22 +629,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 String firstName = firstNameController.text;
                                 String matricNo = matricNoController.text;
                                 String email = emailController.text;
+                                String phoneNumber = phoneNumberController.text;
+                                String bio = bioController.text;
                                 String password = passwordController.text;
 
                                 infoFlushbar(context, "Loading...", "Signing in your account...");
 
-                                // Replace 'http://your_django_api_url/login' with your actual endpoint
                                 final response = await http.post(
-                                  Uri.parse('http://localhost:8000/register'),
+                                  Uri.parse('https://studentmarketplace.pythonanywhere.com/register'),
                                   headers: {
                                     'Content-Type': 'application/json',
                                   },
                                   body: jsonEncode({
                                     'last_name': lastName,
                                     'first_name': firstName,
-                                    'matric_no': matricNo,
-                                    'program': '$program',
-                                    'level': '$level',
+                                    'matric_number': matricNo,
+                                    'bio': bio,
+                                    'phone_number': phoneNumber,
                                     'email': email,
                                     'password': password,
                                   }),

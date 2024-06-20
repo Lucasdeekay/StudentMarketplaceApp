@@ -201,19 +201,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           onPressed: () async {
                             // Handle button press action
                             final response = await http.delete(
-                              Uri.parse('https://localhost:8000/products/$product_id/delete')
+                              Uri.parse('https://studentmarketplace.pythonanywhere.com/products/$product_id/delete/')
                             );
 
                             if (response.statusCode == 200) {
                               // Login successful! Parse the response (replace with your actual data structure)
                               var data = jsonDecode(response.body);
                               String successMessage = data['success'];
+                              data = data['student'];
 
                               successFlushbar(context, "Success", successMessage);
                               Future.delayed(Duration(seconds: 3), () {
                                 // Pass the token to the home screen (or handle it appropriately)
                                 Navigator.of(context).pushAndRemoveUntil(
-                                  createRoute(MyProductsScreen(firstName:data['first_name'], lastName: data['last_name'], email: data['email'], matricNumber: data['matric_no'], username: data['username'], user_id: data['user_id'], program: data['program'],)),
+                                  createRoute(MyProductsScreen(firstName:data['first_name'], lastName: data['last_name'], email: data['email'], matricNumber: data['matric_no'], username: data['user_username'], user_id: '${data['user']}', phone_number: data['phone_number'],)),
                                       (route) => false,
                                 );
                               });

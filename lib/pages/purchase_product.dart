@@ -19,8 +19,9 @@ class PurchaseProductScreen extends StatefulWidget {
   final String price;
   final String available_quantity;
   final String image;
+  final String user_id;
 
-  const PurchaseProductScreen({required this.product_id, required this.title, required this.description, required this.price, required this.available_quantity, required this.image});
+  const PurchaseProductScreen({required this.product_id, required this.title, required this.description, required this.price, required this.available_quantity, required this.image, required this.user_id});
 
   @override
   State<PurchaseProductScreen> createState() => _PurchaseProductScreenState();
@@ -34,12 +35,13 @@ class _PurchaseProductScreenState extends State<PurchaseProductScreen> {
   String price = '';
   String available_quantity = '';
   String image = '';
+  String user_id = '';
   String email = '';
   String txRef = '';
 
   TextEditingController quantityController = TextEditingController();
 
-  var publicKey = '';
+  var publicKey = 'pk_test_0f30abd4793da6f7064c7a7fafd0fefa0c9d50d9';
   final plugin = PaystackPlugin();
 
   @override
@@ -53,6 +55,8 @@ class _PurchaseProductScreenState extends State<PurchaseProductScreen> {
     price = widget.price;
     available_quantity = widget.available_quantity;
     image = widget.image;
+    user_id = widget.user_id;
+    fetchData();
   }
 
   void generateTransactionRef() {
@@ -64,13 +68,13 @@ class _PurchaseProductScreenState extends State<PurchaseProductScreen> {
 
     try {
       final response = await http.get(Uri.parse(
-          'https://localhost:8000/dashboard'));
+          'https://studentmarketplace.pythonanywhere.com/dashboard/?user_id=$user_id/'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
 
         setState(() {
-          email = data['user']['email'];
+          email = data['student']['email'];
         });
 
       } else {
@@ -342,7 +346,7 @@ class _PurchaseProductScreenState extends State<PurchaseProductScreen> {
 
       if (response.status == true) {
         // Payment successful
-        savePaymentData(quantityController.text, product_id);
+        savePaymentData(quantityController.text, product_id, user_id);
         successFlushbar(context, "Success", 'Payment Successful!');
         Navigator.of(context).push(createRoute(PaymentSuccessScreen()));
       } else {
@@ -355,8 +359,8 @@ class _PurchaseProductScreenState extends State<PurchaseProductScreen> {
     }
   }
 
-  void savePaymentData(String quantity, String product_id) async {
-    const apiUrl = 'https://localhost:8000/products/details/purchase';
+  void savePaymentData(String quantity, String product_id, String user_id) async {
+    var apiUrl = 'https://studentmarketplace.pythonanywhere.com/products/details/purchase/?user_id=$user_id/';
     final headers = {'Content-Type': 'application/json'};
     final data = {
       'product_id': product_id,

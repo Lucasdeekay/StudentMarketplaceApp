@@ -183,9 +183,9 @@ class MyProductsScreen extends StatefulWidget {
   final String matricNumber;
   final String username;
   final String user_id;
-  final String program;
+  final String phone_number;
 
-  const MyProductsScreen({Key? key, required this.firstName, required this.lastName, required this.email, required this.matricNumber, required this.username, required this.user_id, required this.program}) : super(key: key);
+  const MyProductsScreen({Key? key, required this.firstName, required this.lastName, required this.email, required this.matricNumber, required this.username, required this.user_id, required this.phone_number}) : super(key: key);
 
   @override
   _MyProductsScreenState createState() => _MyProductsScreenState();
@@ -198,26 +198,26 @@ class _MyProductsScreenState extends State<MyProductsScreen> {
   String matricNumber = '';
   String username = '';
   String user_id = '';
-  String program = '';
+  String phone_number = '';
   ProductList? products;
 
   @override
   void initState() {
     super.initState();
-    fetchData();
     firstName = widget.firstName;
     lastName = widget.lastName;
     email = widget.email;
     matricNumber = widget.matricNumber;
     username = widget.username;
     user_id = widget.user_id;
-    program = widget.program;
+    phone_number = widget.phone_number;
+    fetchData();
   }
 
   Future<void> fetchData() async {
 
     try {
-      final response = await http.get(Uri.parse('https://localhost:8000/products'));
+      final response = await http.get(Uri.parse('https://studentmarketplace.pythonanywhere.com/products/?user_id=$user_id/'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -297,7 +297,7 @@ class _MyProductsScreenState extends State<MyProductsScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomBar(context, 2, firstName, lastName, email, matricNumber, username, user_id, program),
+      bottomNavigationBar: BottomBar(context, 2, firstName, lastName, email, matricNumber, username, user_id, phone_number),
     );
   }
 }
